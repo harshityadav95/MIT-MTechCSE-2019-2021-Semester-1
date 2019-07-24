@@ -1,0 +1,18 @@
+﻿Build started 29-Aug-17 4:23:55 PM.
+     1>Project "D:\Academic Records Jul 2014\HPCS\OPENCL\OpenCL programs\vishu beta(v-v addition)\vishu beta\vishu beta.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Debug\vishu beta.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         All outputs are up-to-date.
+         All outputs are up-to-date.
+       Link:
+         All outputs are up-to-date.
+         vishu beta.vcxproj -> D:\Academic Records Jul 2014\HPCS\OPENCL\OpenCL programs\vishu beta(v-v addition)\Debug\vishu beta.exe
+       FinalizeBuildStatus:
+         Deleting file "Debug\vishu beta.unsuccessfulbuild".
+         Touching "Debug\vishu beta.lastbuildstate".
+     1>Done Building Project "D:\Academic Records Jul 2014\HPCS\OPENCL\OpenCL programs\vishu beta(v-v addition)\vishu beta\vishu beta.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.17

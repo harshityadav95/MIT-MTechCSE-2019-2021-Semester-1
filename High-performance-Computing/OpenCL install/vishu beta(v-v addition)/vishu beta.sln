@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vishu beta", "vishu beta\vishu beta.vcxproj", "{E8521787-58C8-47A2-BC17-D22271C1D423}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E8521787-58C8-47A2-BC17-D22271C1D423}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E8521787-58C8-47A2-BC17-D22271C1D423}.Debug|Win32.Build.0 = Debug|Win32
+		{E8521787-58C8-47A2-BC17-D22271C1D423}.Release|Win32.ActiveCfg = Release|Win32
+		{E8521787-58C8-47A2-BC17-D22271C1D423}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
