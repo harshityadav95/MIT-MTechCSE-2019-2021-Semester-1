@@ -5,6 +5,9 @@
 * [E-Prints Manipal Repository](http://eprints.manipal.edu)
 * [Manipal Pure Network](https://manipal.pure.elsevier.com)
 
+### Free Access to IEEE and other Paid Journals
+*  [SciHub](http://sci-hub.tw)
+
 
 
 ### Subscription Available on Local Network
