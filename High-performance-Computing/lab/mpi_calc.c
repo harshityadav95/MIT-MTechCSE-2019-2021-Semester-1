@@ -4,7 +4,9 @@ int main(int argc, char *argv[])
 {
     int Rank, Size;
     MPI_Init(&argc, &argv);
+    // size returns the total number of process  
     MPI_Comm_size(MPI_COMM_WORLD, &Size);
+    // rank returns the rank o that process
     MPI_Comm_rank(MPI_COMM_WORLD, &Rank);
     if (Rank == 0)
     {
