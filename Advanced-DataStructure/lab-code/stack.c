@@ -8,6 +8,40 @@ struct node
 	int data;
 	struct node *next;
 }*head;
+void push(int data)
+{
+	struct node *temp;
+	temp=new node();
+	if (!temp)
+	{
+		cout<<"\n Heap Overflow";
+		exit(1);
+	}
+	temp->data=data;
+	temp->next=head;
+	head=temp;
+	
+
+}
+void display()
+{
+	struct node	*temp
+	if(top==NULL)
+	{
+		cout<<"\nStack Undeflow";
+	}
+	else
+	{
+		temp=top;
+		while (temp!=NULL)
+		{
+			cout<<" "<<temp->data;
+			temp=temp->next;
+		}
+		
+	}
+	
+}
 int main()
 {
 	int choice=0;	
@@ -23,7 +57,10 @@ int main()
 		{
 			case 1:
 			{
-				push();
+				cout<<"\n Enter the Number you want to Enter : ";
+				int a ;
+				cin>>a;
+				push(a);
 				break;
 
 			}
