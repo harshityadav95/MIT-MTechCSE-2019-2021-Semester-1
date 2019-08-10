@@ -2,7 +2,7 @@
 
 ### Subjects
 
-* [Computer Networks]
+* [Computer Networks](Advanced-Computer-Networks/CN_Index.md)
 * [Database Management System]
 * [Computational Method and Stochastic Process]
 * [High Performnce Computing Lab]
