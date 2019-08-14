@@ -1,93 +1,97 @@
 #include<stdio.h>
-#include<stdlib.h>
-void push();
-void pop();
-void display();
-struct node
+#include<conio.h>
+#define max 10
+int top=-1;
+int stack[max];
+void push()
 {
-	int data;
-	struct node *next;
-}*head;
-void push(int data)
-{
-	struct node *temp;
-	temp=new node();
-	if (!temp)
+	int n;
+	printf("enter the no");
+	scanf("%d",&n);
+	if(top==max-1)
 	{
-		cout<<"\n Heap Overflow";
-		exit(1);
-	}
-	temp->data=data;
-	temp->next=head;
-	head=temp;
-	
-
-}
-void display()
-{
-	struct node	*temp
-	if(top==NULL)
-	{
-		cout<<"\nStack Undeflow";
+		printf("stack is full");
 	}
 	else
 	{
-		temp=top;
-		while (temp!=NULL)
-		{
-			cout<<" "<<temp->data;
-			temp=temp->next;
-		}
-		
+		stack[++top]=n;
 	}
 	
 }
-int main()
+void pop()
 {
-	int choice=0;	
-	printf("\nStack Operations Using Linked List ");
-	while(choice!=4)
+	if(top==-1)
 	{
-		printf("\n1. PUSH");
-		printf("\n2. POP");
-		printf("\n3. Display")
-		printf("\n4. Exit");
+		printf("list is empty");
+	}
+	else
+	{
+		top--;
+		printf("%d element is deleted",stack[top+1]);
+	}
+}
+void display()
+{
+	int i;
+	if(top==-1)
+	{
+		printf("stack is empty");
+	}
+	else
+	{
+		for(i=top;i>=0;i--)
+		{
+			printf("%d",stack[i]);
+		}
+	}
+}
+void main()
+{
+	int choice;
+	printf("1 . push\n");
+	printf("2 .  pop\n");
+	printf("3 . Display\n");
+	printf("4 . exit\n");
+	while(1)
+	{
+		printf("\nEnter ur choice\n");
 		scanf("%d",&choice);
 		switch(choice)
 		{
 			case 1:
-			{
-				cout<<"\n Enter the Number you want to Enter : ";
-				int a ;
-				cin>>a;
-				push(a);
+				push();
 				break;
-
-			}
 			case 2:
-			{
 				pop();
-				break();
-				
-			}
+				break;  	
 			case 3:
-			{
 				display();
-				break();
-	
-			
-			}
-			case 4:
-			{
-				printf("Exiting");
 				break;
-			}
+			case 4:
+			    exit(0);
+			  
 			default:
-			{
-				printf("\n please Enter a valid Choice");
-			}
-			
-		}		
-
+			printf("Ïnvalid");		
+		}
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
