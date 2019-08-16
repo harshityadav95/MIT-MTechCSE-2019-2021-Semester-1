@@ -12,14 +12,14 @@ int main(int argc,char *argv[])
 	MPI_Comm_size(MPI_COMM_WORLD,&size);
 	if(rank==0)
 	{
-		//MPI_Send(a,100,MPI_INT,1,0,MPI_COMM_WORLD);
+		MPI_Send(a,100,MPI_INT,1,0,MPI_COMM_WORLD);
 		//MPI_Send(a,100,MPI_INT,2,1,MPI_COMM_WORLD);
 
 	}
 	if (rank==1)
 	{
 		int a[100]={0};
-		//MPI_Recv(a,100,MPI_INT,0,1,MPI_COMM_WORLD,&status);
+		MPI_Recv(a,100,MPI_INT,0,1,MPI_COMM_WORLD,&status);
 		for (int i = 2; i <=50; ++i)
 		{
 			//printf("\n Checking for");
