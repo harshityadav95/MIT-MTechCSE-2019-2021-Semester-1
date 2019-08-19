@@ -16,7 +16,12 @@ void print(btnode* t)
 	{
 		print(t->child[i]);
 		if(t->key[i]!=-1)
-		cout<<t->key[i]<<" ";
+		{
+			char q=t->key[i];
+		cout<<q<<" ";
+
+		}
+		
 	}
     print(t->child[2*d]);
 }
@@ -136,30 +141,15 @@ btnode* create_root(btnode* T,btnode* new_node,int k)
 		root->child[1]=new_node;
 		return (root);
 }
-void insert(btnode* &T,int k,btnode* new_node)
+void insert(btnode* &T,char q,btnode* new_node)
 {
 	btnode* root=NULL;
+	int k=q;
 	int flag=setflag(T,k,new_node);
 	if(flag) T=create_root(T,new_node,k);
 }
-void searching(int val, int *pos, struct btreeNode *myNode) {
-        if (!myNode) {
-                return;
-        }
 
-        if (val < myNode->val[1]) {
-                *pos = 0;
-        } else {
-                for (*pos = myNode->count;
-                        (val < myNode->val[*pos] && *pos > 1); (*pos)--);
-                if (val == myNode->val[*pos]) {
-                        printf("Given data %d is present in B-Tree", val);
-                        return;
-                }
-        }
-        searching(val, pos, myNode->link[*pos]);
-        return;
-  }
+  
 int main()
 {
 	//week 3 program 
@@ -167,15 +157,14 @@ int main()
 	cout<<"Enter the Value of T\n";
 	cin>>d;
 	cout<<"enter elements to be inserted \n";
-	int next;
+	char next;
 	while(cin>>next)
 	{
-		if(next==-1) break;
+		if(next=='1') break;
 		else insert(root,next,NULL);
 	}
 	print(root);
-	//Week 4 
-	cout<<"\n Enter the Element you want to Search :";
+	
 
 	return (0);
 }
