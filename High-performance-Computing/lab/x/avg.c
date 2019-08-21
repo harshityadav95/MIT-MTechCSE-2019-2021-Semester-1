@@ -4,11 +4,12 @@
 void main(int argc,char *argv[])
 {
 int rank,size,n,i,x,k,l,a[20],b[20],sum=0,sum0[10],sum1=0,sum2=0;
+double t1,t2;
 MPI_Status status;
 MPI_Init(&argc,&argv);
 MPI_Comm_size(MPI_COMM_WORLD,&size);
 MPI_Comm_rank(MPI_COMM_WORLD,&rank);
-
+t1 = MPI_Wtime(); 
 if(rank == 0)
 {
 	printf("enter n:");
@@ -22,14 +23,15 @@ if(rank == 0)
 	}
 }
     	
-    MPI_Bcast(&x,1,MPI_INT,0,MPI_COMM_WORLD);
-     //MPI_Scatter(&size,1,MPI_INT,&l,1,MPI_INT,0,MPI_COMM_WORLD);
+MPI_Bcast(&x,1,MPI_INT,0,MPI_COMM_WORLD);
+//int MPI_Bcast(void* buffer, int count, MPI_Datatype datatype, int root, MPI_Comm comm ) 
+//MPI_Scatter(&size,1,MPI_INT,&l,1,MPI_INT,0,MPI_COMM_WORLD);
 //printf("%d %d\t", rank,k);
-	MPI_Scatter(&a[0],x/size,MPI_INT,&b[0],x/size,MPI_INT,0,MPI_COMM_WORLD);
+MPI_Scatter(&a[0],x/size,MPI_INT,&b[0],x/size,MPI_INT,0,MPI_COMM_WORLD);
 	
-	for(i=0;i<x/size;i++)
-		sum=sum+b[i];
-		//printf("%d %d\t",rank,b[i]);
+for(i=0;i<x/size;i++)
+	sum=sum+b[i];
+	//printf("%d %d\t",rank,b[i]);
 
 	sum=sum/(x/size);
 	
@@ -44,7 +46,8 @@ if(rank == 0)
 
  	printf("avg= %d", sum1/size );
  }
-
+t2 = MPI_Wtime(); 
+printf( "Elapsed time is %f\n", t2 - t1 ); 
  MPI_Finalize();
 
 
