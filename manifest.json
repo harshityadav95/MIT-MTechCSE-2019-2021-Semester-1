@@ -1,11 +1,11 @@
 {
-  "name": "MIT MxCSE",
-  "short_name": "MIT CSE",
+  "name": "Keyscore MIT",
+  "short_name": "Keyscore MIT",
   "theme_color": "#2196f3",
   "background_color": "#2196f3",
   "display": "standalone",
   "Scope": "/",
-  "start_url": "/https://harshityadav.in/MIT-MTechCSE-2019-2021.github.io/",
+  "start_url": "https://harshityadav.in/MIT-MTechCSE-2019-2021/",
   "icons": [
     {
       "src": "images/icons/icon-72x72.png",
