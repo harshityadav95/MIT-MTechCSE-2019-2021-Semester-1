@@ -49,6 +49,7 @@ message1[i] = message1[i] - 32;
 
 printf("Process of %d received the message %s\n",myrank,message1);
 
+MPI_Ssend(&len,1,MPI_INT,1,0,MPI_COMM_WORLD);
 MPI_Send(message1,len,MPI_CHAR,0,2,MPI_COMM_WORLD);
 
 }
