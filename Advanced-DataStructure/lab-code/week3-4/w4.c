@@ -113,16 +113,6 @@ void copySuccessor(struct btreeNode *myNode, int pos)
     dummy = dummy->link[0];
     myNode->val[pos] = dummy->val[1];
 }
-void removeVal(struct btreeNode *myNode, int pos)
-{
-        int i = pos + 1;
-        while (i <= myNode->count) {
-                myNode->val[i - 1] = myNode->val[i];
-                myNode->link[i - 1] = myNode->link[i];
-                i++;
-        }
-        myNode->count--;
-  }
 
   /* shifts value from parent to right child */
   void doRightShift(struct btreeNode *myNode, int pos) {
@@ -219,61 +209,9 @@ void removeVal(struct btreeNode *myNode, int pos)
         }
   }
 
-  /* delete val from the node */
-  int delValFromNode(int val, struct btreeNode *myNode) {
-        int pos, flag = 0;
-        if (myNode) {
-                if (val < myNode->val[1]) {
-                        pos = 0;
-                        flag = 0;
-                } else {
-                        for (pos = myNode->count;
-                                (val < myNode->val[pos] && pos > 1); pos--);
-                         if (val == myNode->val[pos]) {
-                                flag = 1;
-                        } else {
-                                flag = 0;
-                        }
-                }
-                if (flag) {
-                        if (myNode->link[pos - 1]) {
-                                copySuccessor(myNode, pos);
-                                flag = delValFromNode(myNode->val[pos], myNode->link[pos]);
-                                if (flag == 0) {
-                                        printf("Given data is not present in B-Tree\n");
-                                }
-                        } else {
-                                removeVal(myNode, pos);
-                        }
-                } else {
-                        flag = delValFromNode(val, myNode->link[pos]);
-                }
-                if (myNode->link[pos]) {
-                        if (myNode->link[pos]->count < MIN)
-                                adjustNode(myNode, pos);
-                }
-        }
-        return flag;
-  }
-
-  /* delete val from B-tree */
-  void deletion(int val, struct btreeNode *myNode) {
-        struct btreeNode *tmp;
-        if (!delValFromNode(val, myNode)) {
-                printf("Given value is not present in B-Tree\n");
-                return;
-        } else {
-                if (myNode->count == 0) {
-                        tmp = myNode;
-                        myNode = myNode->link[0];
-                        free(tmp);
-                }
-        }
-        root = myNode;
-        return;
-  }
   void searching(int val, int *pos, struct btreeNode *myNode) 
 {
+       int flag=0;
        if (!myNode)
         {
                 return;
