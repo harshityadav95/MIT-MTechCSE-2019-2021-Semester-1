@@ -71,7 +71,7 @@ class Trainer(object):
             test_loss, test_acc = self.evaluate()
 
             print(
-                'Epoch: {}/{},'.format(epoch, epochs),
+                'Rank: {}/{},'.format(epoch, epochs),
                 'train loss: {}, train acc: {},'.format(train_loss, train_acc),
                 'test loss: {}, test acc: {}.'.format(test_loss, test_acc),
             )
@@ -166,7 +166,7 @@ def run(args):
     test_loader = MNISTDataLoader(args.root, args.batch_size, train=False)
 
     trainer = Trainer(model, optimizer, train_loader, test_loader, device)
-    trainer.fit(args.epochs)
+    trainer.fit(args.world_size)
 
 
 def main():
@@ -178,9 +178,9 @@ def main():
         type=str,
         default='tcp://127.0.0.1:23456',
         help='URL specifying how to initialize the package.')
-    parser.add_argument('-s', '--world-size', type=int, default=1, help='Number of processes participating in the job.')
+    parser.add_argument('-s', '--epochs', type=int, default=1, help='Number of processes participating in the job.')
     parser.add_argument('-r', '--rank', type=int, default=0, help='Rank of the current process.')
-    parser.add_argument('--epochs', type=int, default=20)
+    parser.add_argument('--world-size', type=int, default=5)
     parser.add_argument('--no-cuda', action='store_true')
     parser.add_argument('-lr', '--learning-rate', type=float, default=1e-3)
     parser.add_argument('--root', type=str, default='data')
@@ -192,7 +192,7 @@ def main():
         distributed.init_process_group(
             backend=args.backend,
             init_method=args.init_method,
-            world_size=args.world_size,
+            world_size=1,
             rank=args.rank,
         )
 
