@@ -1,9 +1,10 @@
 from __future__ import division, print_function
 
 import argparse
-
+#from mpi4py import MPI
 import torch
 import torch.nn.functional as F
+from pynum import pynums
 from torch import distributed, nn
 from torch.utils import data
 from torchvision import datasets, transforms
@@ -66,6 +67,7 @@ class Trainer(object):
         self.device = device
 
     def fit(self, epochs):
+        pynums(epochs)
         for epoch in range(1, epochs + 1):
             train_loss, train_acc = self.train()
             test_loss, test_acc = self.evaluate()
@@ -148,7 +150,18 @@ class MNISTDataLoader(data.DataLoader):
             sampler=sampler,
         )
 
+class Partition(object):
 
+    def __init__(self, data, index):
+        self.data = data
+        self.index = index
+
+    def __len__(self):
+        return len(self.index)
+
+    def __getitem__(self, index):
+        data_idx = self.index[index]
+        return self.data[data_idx]
 def run(args):
     device = torch.device('cuda' if torch.cuda.is_available() and not args.no_cuda else 'cpu')
 
@@ -168,7 +181,40 @@ def run(args):
     trainer = Trainer(model, optimizer, train_loader, test_loader, device)
     trainer.fit(args.world_size)
 
+class DataPartitioner(object):
 
+    def __init__(self, data, sizes=[0.7, 0.2, 0.1], seed=1234):
+        self.data = data
+        self.partitions = []
+        rng = Random()
+        rng.seed(seed)
+        data_len = len(data)
+        indexes = [x for x in range(0, data_len)]
+        rng.shuffle(indexes)
+
+        for frac in sizes:
+            part_len = int(frac * data_len)
+            self.partitions.append(indexes[0:part_len])
+            indexes = indexes[part_len:]
+
+    def use(self, partition):
+        return Partition(self.data, self.partitions[partition])
+
+def partition_dataset():
+    dataset = datasets.MNIST('./data', train=True, download=True,
+                             transform=transforms.Compose([
+                                 transforms.ToTensor(),
+                                 transforms.Normalize((0.1307,), (0.3081,))
+                             ]))
+    size = dist.get_world_size()
+    bsz = 128 / float(size)
+    partition_sizes = [1.0 / size for _ in range(size)]
+    partition = DataPartitioner(dataset, partition_sizes)
+    partition = partition.use(dist.get_rank())
+    train_set = torch.utils.data.DataLoader(partition,
+                                         batch_size=bsz,
+                                         shuffle=True)
+    return train_set, bsz
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--backend', type=str, default='gloo', help='Name of the backend to use.')
@@ -197,7 +243,11 @@ def main():
         )
 
     run(args)
-
+def average_gradients(model):
+    size = float(dist.get_world_size())
+    for param in model.parameters():
+        dist.all_reduce(param.grad.data, op=dist.reduce_op.SUM)
+        param.grad.data /= size
 
 if __name__ == '__main__':
     main()
