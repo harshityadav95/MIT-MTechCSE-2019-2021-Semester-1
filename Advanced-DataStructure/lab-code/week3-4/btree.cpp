@@ -146,7 +146,7 @@ void insert(btnode* &T,char q,btnode* new_node)
 	btnode* root=NULL;
 	int k=q;
 	int flag=setflag(T,k,new_node);
-	if(flag) T=create_root(T,new_node,k);
+	if(flag) T=create_root(T,new_node,k);																																																																																																																																								cout<<"enter elements to be inserted \n";																																																																																			
 }
 
   
