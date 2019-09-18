@@ -1,0 +1,8 @@
+#inlclude<iostream>
+#include<stdlib.h>
+using namespace std;
+int main()
+{
+	cout<<"\n w73";
+	return 1;
+}
