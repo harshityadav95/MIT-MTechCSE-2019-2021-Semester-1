@@ -1,7 +1,6 @@
 from __future__ import division, print_function
 
 import argparse
-#from mpi4py import MPI
 import torch
 import torch.nn.functional as F
 from pynum import pynums
@@ -73,7 +72,7 @@ class Trainer(object):
             test_loss, test_acc = self.evaluate()
 
             print(
-                'Rank: {}/{},'.format(epoch, epochs),
+                'Rank Total: {},'.format(epochs),
                 'train loss: {}, train acc: {},'.format(train_loss, train_acc),
                 'test loss: {}, test acc: {}.'.format(test_loss, test_acc),
             )
@@ -232,7 +231,7 @@ def main():
     parser.add_argument('--root', type=str, default='data')
     parser.add_argument('--batch-size', type=int, default=128)
     args = parser.parse_args()
-    print(args)
+    print('Process started ----')
 
     if args.world_size > 1:
         distributed.init_process_group(

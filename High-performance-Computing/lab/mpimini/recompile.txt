@@ -1,0 +1,30 @@
+PyTorch comes with a simple distributed package and guide that supports multiple backends such as TCP, MPI, and Gloo. The following is a quick tutorial to get you set up with PyTorch and MPI.
+The MPI backend, though supported, is not available unless you compile PyTorch from its source. Assuming you have conda, follow the steps below to get PyTorch compiled. I am also assuming you are doing this on a Linux machine with Nvidia GPUs. If not please refer to the complete installation guide.
+Prerequisites
+You’ll need to install the following two Nvidia packages before starting the build process.
+NVIDIA CUDA 7.5 or above
+NVIDIA cuDNN v6.x or above
+I also found that I need to have Nvidia NCCL libraries in the LD_LIBRARY_PATH. This can be done by simply downloading NCCL and pointing to its lib directory. You’ll need to register with Nvidia to download the correct NCCL package.
+The Required Python Libraries
+You’ll need a few more Python libraries to get started. Follow the instruction below to install them.
+# Install OpenMPI. MPICH works as well.
+conda install -c conda-forge openmpi
+# set CMAKE_PREFIX_PATH to anaconda root directory
+export CMAKE_PREFIX_PATH="$(dirname $(which conda))/../" 
+
+# Install the basic dependencies
+conda install numpy pyyaml mkl mkl-include setuptools cmake cffi typing
+conda install -c mingfeima mkldnn
+
+# Add LAPACK support for the GPU
+conda install -c pytorch magma-cuda80 # or magma-cuda90 if CUDA 9
+One caveat is that I had trouble with conda mkl and mkl-include packages on RHEL. I ended up installing the pip libraries using the following commands.
+# Uninstall the conda packages if you've already installed them
+conda uninstall mkl mkl-include
+pip install mkl
+pip instal mkl_include
+Once you have installed the dependencies, clone (recursively to get submodules) PyTorch repo and build it using the following comamnds.
+git clone --recursive  https://github.com/pytorch/pytorch.git
+cd pytorch
+python setup.py install
+If you run into linker errors at the end, make sure to check your LD_LIBRARY_PATH variable to see if your cuda libraries are included. I have included both cuDNN and NCCL libraries in the LD_LIBRARY_PAT
