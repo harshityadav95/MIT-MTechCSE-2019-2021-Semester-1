@@ -1,0 +1,19 @@
+Computer configuration
+------------------------
+
+1. CPU : Intel Core i3-4005U 1.70Ghz 1.70 Ghz
+2. RAM : 4.00 GB  DDR3  L Memory
+3. OS : Windows 10 Enterprise
+ 
+Compiler Configuration
+-----------------------
+
+1. Compiler : Borland C++ Compiler 5.5
+2. IDE      : Codeblocks 
+3. IDE Version  : 10.05
+
+TestCase Description
+------------------------
+Random case: In random testcase, the array contains the randomly chosen elements.
+worst cases: In this, all the elements of the array belongs to a single range ( 2^i to 2^i+1) 
+Favourable cases : In this, the total number of elements in the array can be equally divided into 3 or more ranges(upto 31) iteratively.
