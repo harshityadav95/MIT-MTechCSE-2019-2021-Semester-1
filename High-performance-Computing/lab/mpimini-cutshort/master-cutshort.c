@@ -12,24 +12,41 @@ int bitcount(int);
 int main()
 {
     int num,i;
-    int *arr,*res;
-    scanf("%d",&num);
-    clock_t start,stop;
-    arr = (int *) malloc(  sizeof( int ) * num );
-    for(i=0;i<num;i++)
+    int *res;
+    //scanf("%d",&num);
+    //num=20;
+        FILE *fptr;
+   
+    int count=0;
+    int arr[1002];
+    fptr = fopen("integers", "r");
+        printf("\nReading the File:\n");
+        while ( (num = getw(fptr)) != EOF ) 
+        {
+            arr[count]=num;
+            count++;
+
+        }
+        num=count;
+            fclose(fptr);
+    //arr = (int *) malloc(  sizeof( int ) * num );
+    //int arr[20]={15,10,19,49,13,2,7,4,1,3,10,20,17,15,46,16,53,0,5,9};
+    /*for(i=0;i<num;i++)
     {
         scanf("%d",&arr[i]);
-    }
+    }*/
+             clock_t start,stop;
     start=clock();
     res=cutshort(arr,num);
     stop=clock();
-  //  printf("CLOCKS PER SECOND = %d\n",CLOCKS_PER_SEC);
-  //  printf("START CLOCK = %d \nSTOP CLOCK = %d \n",start,stop);
-  //  printf("TIME TAKEN = %f\n",(float)(stop-start)/CLOCKS_PER_SEC);
-  /*  for(i=0;i<num;i++)
+    printf("CLOCKS PER SECOND = %ld\n",CLOCKS_PER_SEC);
+    printf("START CLOCK = %ld \nSTOP CLOCK = %ld \n",start,stop);
+    printf("TIME TAKEN = %f\n",(float)(stop-start)/CLOCKS_PER_SEC);
+    for(i=0;i<20;i++)
     {
         printf("%d\t",res[i]);
-    }   */
+    }   
+
     return 0;
 }
 
@@ -38,7 +55,7 @@ int * cutshort(int *a,int n)
 {
     int i,max,bitmax,pos;
     int *bitband,*resultant,*bitmap;
-    clock_t start,stop;
+   // clock_t start,stop;
  /*   for(i=1,max=a[0];i<n;i++)
     {
         if(max<a[i])
@@ -57,7 +74,7 @@ int * cutshort(int *a,int n)
     for(i=0;i<n;i++)
         resultant[i]=0;
 
-    start=clock();
+    //start=clock();
     for(i=0;i<n;i++)
     {
         bitband[ bitcount(a[i]) ] += 1 ;
@@ -95,11 +112,11 @@ int * cutshort(int *a,int n)
         quicksort(resultant,bitband[i-1],bitband[i]-1);
     }
 
-    stop=clock();
+    //stop=clock();
 
-    printf("CLOCKS PER SECOND = %d\n",CLOCKS_PER_SEC);
-    printf("START CLOCK = %d \nSTOP CLOCK = %d \n",start,stop);
-    printf("TIME TAKEN = %f\n",(float)(stop-start)/CLOCKS_PER_SEC);
+    /*printf("CLOCKS PER SECOND = %ld\n",CLOCKS_PER_SEC);
+    printf("START CLOCK = %ld \nSTOP CLOCK = %ld \n",start,stop);
+    printf("TIME TAKEN = %f\n",(float)(stop-start)/CLOCKS_PER_SEC);*/
 
 
     // freeing the memory
