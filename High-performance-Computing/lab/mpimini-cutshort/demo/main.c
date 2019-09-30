@@ -47,13 +47,13 @@ int main(int argc,char* argv[])
 {
 	int size,rank;
 	printf("\n Hello world");
-	int a[1002];
+	int a[60001];
 	//int a[20]={15,10,19,49,13,2,7,4,1,3,10,20,17,15,46,16,53,0,5,9};
-	int a2[1002],pos,num;
+	int a2[60001],pos,num;
 	int bitmap[32]={0};
 	int bitband[32]={0};
 	int b2[32]={0};
-	int resultant[10002]={0};
+	int resultant[60001]={0};
 	int number_of_elements;
 	
 	MPI_Status status;
@@ -75,7 +75,8 @@ int main(int argc,char* argv[])
   		}
   		fclose(fptr);
   		number_of_elements=count;
-
+	    clock_t start,stop;
+    	start=clock();
     	MPI_Send(&number_of_elements,1,MPI_INT,1,0,MPI_COMM_WORLD);
     	MPI_Send(&a[number_of_elements/2],number_of_elements/2,MPI_INT,1,1,MPI_COMM_WORLD);
     	for(int i=0;i<number_of_elements/2;i++)
@@ -92,8 +93,7 @@ int main(int argc,char* argv[])
         {
         	bitband[i] += bitband[i-1];
         }
-        clock_t start,stop;
-    	start=clock();
+    
          for(int i=0;i<number_of_elements;i++)
     	{
         	pos=bitcount(a[i]);

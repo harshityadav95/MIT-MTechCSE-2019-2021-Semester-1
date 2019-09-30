@@ -16,9 +16,9 @@ int main()
     //scanf("%d",&num);
     //num=20;
         FILE *fptr;
-   
+         
     int count=0;
-    int arr[1002];
+    int arr[60001];
     fptr = fopen("integers", "r");
         printf("\nReading the File:\n");
         while ( (num = getw(fptr)) != EOF ) 
@@ -35,7 +35,7 @@ int main()
     {
         scanf("%d",&arr[i]);
     }*/
-             clock_t start,stop;
+       clock_t start,stop;
     start=clock();
     res=cutshort(arr,num);
     stop=clock();
