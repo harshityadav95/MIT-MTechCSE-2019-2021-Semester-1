@@ -1,47 +1,26 @@
 // Cutshort algo using MPI  
-//Using Quick Sort
+//Using InsertioSort
 #include<stdlib.h>
 #include<stdio.h>
 #include<mpi.h>
 #include<time.h>
+#include<limits.h>
 int bitcount(int num);
-void swap(int* a, int* b) 
-{ 
-    int t = *a; 
-    *a = *b; 
-    *b = t; 
-} 
-int partition (int arr[], int low, int high) 
-{ 
-    int pivot = arr[high];    // pivot 
-    int i = (low - 1);  // Index of smaller element 
-  
-    for (int j = low; j <= high- 1; j++) 
-    { 
-        // If current element is smaller than the pivot 
-        if (arr[j] < pivot) 
-        { 
-            i++;    // increment index of smaller element 
-            swap(&arr[i], &arr[j]); 
-        } 
-    } 
-    swap(&arr[i + 1], &arr[high]); 
-    return (i + 1); 
-} 
-void quicksort(int arr[], int low, int high) 
-{ 
-    if (low < high) 
-    { 
-        /* pi is partitioning index, arr[p] is now 
-           at right place */
-        int pi = partition(arr, low, high); 
-  
-        // Separately sort elements before 
-        // partition and after partition 
-        quicksort(arr, low, pi - 1); 
-        quicksort(arr, pi + 1, high); 
-    } 
-} 
+void InsertionSort(int * arr,int low,int high)
+{
+    int x,y,temp;
+    for(x=low+1;x<=high;x++)
+    {
+            y = x-1;
+            temp=arr[x];
+            while(y>=low && arr[y]>temp)
+            {
+                arr[y+1]=arr[y];
+                y=y-1;
+            }
+            arr[y+1]=temp;
+    }
+}
 
 int main(int argc,char* argv[])
 {
@@ -103,7 +82,8 @@ int main(int argc,char* argv[])
     	
     	for(int i=1;i<=32;i++)
     	{
-        	quicksort(resultant,bitband[i-1],bitband[i]-1);
+        	//quicksort(resultant,bitband[i-1],bitband[i]-1);
+             InsertionSort(resultant,bitband[i-1],bitband[i]-1);
     	}
     	
     	stop=clock();

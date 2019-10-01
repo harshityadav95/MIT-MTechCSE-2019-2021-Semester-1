@@ -49,9 +49,10 @@ int main(int argc,char* argv[])
 	printf("\n Hello world");
 	int a[60001];
 	//int a[20]={15,10,19,49,13,2,7,4,1,3,10,20,17,15,46,16,53,0,5,9};
-	int a2[60001],pos,num;
+	int a2[60001],pos,num, a3[60001];
 	int bitmap[32]={0};
 	int bitband[32]={0};
+    int b1[32]={0};
 	int b2[32]={0};
 	int resultant[60001]={0};
 	int number_of_elements;
@@ -77,17 +78,21 @@ int main(int argc,char* argv[])
   		number_of_elements=count;
 	    clock_t start,stop;
     	start=clock();
+        for(int i=0;i<number_of_elements;i++)
+        {
+            a2[ bitcount(a[i]) ] += 1 ;
+        }
     	MPI_Send(&number_of_elements,1,MPI_INT,1,0,MPI_COMM_WORLD);
-    	MPI_Send(&a[number_of_elements/2],number_of_elements/2,MPI_INT,1,1,MPI_COMM_WORLD);
+    	MPI_Send(&a2[number_of_elements/2],number_of_elements/2,MPI_INT,1,1,MPI_COMM_WORLD);
     	for(int i=0;i<number_of_elements/2;i++)
         {
-        	bitband[ bitcount(a[i]) ] += 1 ;
+            b1[ a2[i] ] += 1 ;
         }
         MPI_Recv(&b2,32,MPI_INT,1,2,MPI_COMM_WORLD,&status);
         for (int i = 0; i < 32; ++i)
         {
-        	bitband[i]=bitband[i]+b2[i];
-        	printf("\n %d ",bitband[i]);
+        	bitband[i]=b1[i]+b2[i];
+        	//printf("\n %d ",bitband[i]);
         }
         for(int i=1;i<=32;i++)
         {
@@ -124,7 +129,7 @@ int main(int argc,char* argv[])
     	MPI_Recv(&a2[0],number_of_elements/2,MPI_INT,0,1,MPI_COMM_WORLD,&status);
     	for(int i=0;i<number_of_elements/2;i++)
         {
-        	b2[ bitcount(a2[i]) ] += 1 ;
+        	b2[a2[i] ] += 1 ;
         }
        	MPI_Send(&b2,32,MPI_INT,0,2,MPI_COMM_WORLD);
 

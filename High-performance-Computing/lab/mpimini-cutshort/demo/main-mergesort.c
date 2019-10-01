@@ -1,47 +1,56 @@
 // Cutshort algo using MPI  
-//Using Quick Sort
+//Using MergeSort
 #include<stdlib.h>
 #include<stdio.h>
 #include<mpi.h>
 #include<time.h>
+#include<limits.h>
 int bitcount(int num);
-void swap(int* a, int* b) 
-{ 
-    int t = *a; 
-    *a = *b; 
-    *b = t; 
-} 
-int partition (int arr[], int low, int high) 
-{ 
-    int pivot = arr[high];    // pivot 
-    int i = (low - 1);  // Index of smaller element 
-  
-    for (int j = low; j <= high- 1; j++) 
-    { 
-        // If current element is smaller than the pivot 
-        if (arr[j] < pivot) 
-        { 
-            i++;    // increment index of smaller element 
-            swap(&arr[i], &arr[j]); 
-        } 
-    } 
-    swap(&arr[i + 1], &arr[high]); 
-    return (i + 1); 
-} 
-void quicksort(int arr[], int low, int high) 
-{ 
-    if (low < high) 
-    { 
-        /* pi is partitioning index, arr[p] is now 
-           at right place */
-        int pi = partition(arr, low, high); 
-  
-        // Separately sort elements before 
-        // partition and after partition 
-        quicksort(arr, low, pi - 1); 
-        quicksort(arr, pi + 1, high); 
-    } 
-} 
+void merge_sort(int *,int ,int );
+void merge(int *,int,int,int);
+void merge_sort(int *a,int p,int r)
+{
+    if(p<r)
+    {
+        int q;
+        q = (p+r)/2;
+        merge_sort(a,p,q);
+        merge_sort(a,q+1,r);
+        merge(a,p,q,r);
+    }
+}
+
+
+void merge(int *a,int p,int q,int r)
+{
+    int n1,n2,*b,*c;
+    int i,j,k;
+    n1=q-p+1;
+    n2=r-q;
+    b=(int *) malloc(  sizeof(int) * (n1+1));
+    c=(int *) malloc(  sizeof(int) * (n2+1));
+    for(i=0;i<(n1);i++)
+        b[i] = a[p+i];
+    for(i=0;i<(n2);i++)
+        c[i] = a[q+1+i];
+
+    b[n1]=INT_MAX;
+    c[n2]=INT_MAX;
+    for(i=0,j=0,k=p;k<=r;k++)
+    {
+        if( b[i]<c[j] )
+        {
+            a[k]=b[i];
+            i++;
+        }
+        else
+        {
+            a[k]=c[j];
+            j++;
+        }
+    }
+
+}
 
 int main(int argc,char* argv[])
 {
@@ -103,7 +112,8 @@ int main(int argc,char* argv[])
     	
     	for(int i=1;i<=32;i++)
     	{
-        	quicksort(resultant,bitband[i-1],bitband[i]-1);
+        	//quicksort(resultant,bitband[i-1],bitband[i]-1);
+             merge_sort(resultant,bitband[i-1],bitband[i]-1);
     	}
     	
     	stop=clock();

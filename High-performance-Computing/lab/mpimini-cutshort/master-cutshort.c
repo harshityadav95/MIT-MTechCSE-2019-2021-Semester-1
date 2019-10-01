@@ -16,7 +16,7 @@ int main()
     //scanf("%d",&num);
     //num=20;
         FILE *fptr;
-         
+        
     int count=0;
     int arr[60001];
     fptr = fopen("integers", "r");
@@ -36,16 +36,16 @@ int main()
         scanf("%d",&arr[i]);
     }*/
        clock_t start,stop;
-    start=clock();
+    start=clock(); 
     res=cutshort(arr,num);
     stop=clock();
     printf("CLOCKS PER SECOND = %ld\n",CLOCKS_PER_SEC);
     printf("START CLOCK = %ld \nSTOP CLOCK = %ld \n",start,stop);
     printf("TIME TAKEN = %f\n",(float)(stop-start)/CLOCKS_PER_SEC);
-    for(i=0;i<20;i++)
+    /*for(i=0;i<20;i++)
     {
         printf("%d\t",res[i]);
-    }   
+    }   */
 
     return 0;
 }
