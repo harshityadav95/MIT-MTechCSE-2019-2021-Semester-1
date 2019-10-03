@@ -11,16 +11,24 @@ void merge(int *,int,int,int);
 
 int main()
 {
-    int num,i;
-    int *arr,*res;
-    scanf("%d",&num);
-    clock_t start,stop;
-    arr = (int *) malloc(  sizeof( int ) * num );
-    for(i=0;i<num;i++)
-    {
-        scanf("%d",&arr[i]);
-    }
-    start=clock();
+   
+ FILE *fptr;
+int *res;
+      int num,i;   
+    int count=0;
+    int arr[10001];
+ clock_t start,stop;
+    fptr = fopen("integers", "r");
+        printf("\nReading the File:\n");
+        while ( (num = getw(fptr)) != EOF ) 
+        {
+            arr[count]=num;
+            count++;
+
+        }
+        num=count;
+            fclose(fptr);
+ start=clock();
     res=cutshort(arr,num);
     stop=clock();
   //  printf("CLOCKS PER SECOND = %d\n",CLOCKS_PER_SEC);
@@ -87,8 +95,8 @@ int * cutshort(int *a,int n)
 
     stop=clock();
 
-    printf("CLOCKS PER SECOND = %d\n",CLOCKS_PER_SEC);
-    printf("START CLOCK = %d \nSTOP CLOCK = %d \n",start,stop);
+printf("CLOCKS PER SECOND = %ld\n",CLOCKS_PER_SEC);
+    printf("START CLOCK = %ld \nSTOP CLOCK = %ld \n",start,stop);
     printf("TIME TAKEN = %f\n",(float)(stop-start)/CLOCKS_PER_SEC);
 
     // freeing the memory
