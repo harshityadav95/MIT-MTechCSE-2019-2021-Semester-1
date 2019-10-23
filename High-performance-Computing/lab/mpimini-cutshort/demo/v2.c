@@ -6,16 +6,16 @@
 #include<mpi.h>
 #include<time.h>
 #define arm 32
-int bitcount(unsigned long num);
-void swap(unsigned long* a, unsigned long* b) 
+int bitcount(int num);
+void swap(int* a, int* b) 
 { 
-    unsigned long t = *a; 
+    int t = *a; 
     *a = *b; 
     *b = t; 
 } 
-int partition (unsigned long arr[], int low, int high) 
+int partition (int arr[], int low, int high) 
 { 
-    unsigned long pivot = arr[high];    // pivot 
+    int pivot = arr[high];    // pivot 
     int i = (low - 1);  // Index of smaller element 
   
     for (int j = low; j <= high- 1; j++) 
@@ -30,7 +30,7 @@ int partition (unsigned long arr[], int low, int high)
     swap(&arr[i + 1], &arr[high]); 
     return (i + 1); 
 } 
-void quicksort(unsigned long arr[], int low, int high) 
+void quicksort(int arr[], int low, int high) 
 { 
     if (low < high) 
     { 
@@ -48,10 +48,12 @@ void quicksort(unsigned long arr[], int low, int high)
 int main(int argc,char* argv[])
 {
 	int size,rank;
-	printf("\n Hello world");
+	//printf("\n Hello world");
 	//int a[60001];
 	//int a[20]={15,10,19,49,13,2,7,4,1,3,10,20,17,15,46,16,53,0,5,9};
-	unsigned long arr2[50000]={0};
+	int arr2[50000]={0};
+    int arr[50000]={0};
+    int resultant[50000]={0};
     int pos;
 	int a[20];    
     int bitband[arm]={0};
@@ -60,9 +62,8 @@ int main(int argc,char* argv[])
 	//int bitband[32]={0};
 	int b2[32]={0};
 	//int resultant[60001]={0};
-    unsigned long count=0,index=0;
-    unsigned long *arr;
-    unsigned long *resultant;
+   int count=0,index=0;
+
 	
 	MPI_Status status;
 	MPI_Init(&argc,&argv);
@@ -74,27 +75,27 @@ int main(int argc,char* argv[])
     	
     	//count=20;
       
-        unsigned long num;
+        int num;
        ///a[20]={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
         /*for ( i = 0; i < count; ++i)
         {
             a[i]=i+1;
         }*/
-    	/*FILE *fptr;
+    	FILE *fptr;
     	fptr = fopen("integers", "r");
 		printf("\ncounting the File:\n");
 		while ( (num = getw(fptr)) != EOF ) 
 		{
-    		//a[count]=num;
+    		arr[count]=num;
     		count++;
 
   		}
-  		fclose(fptr);*/
-        count=20;
-        arr = (unsigned long *) malloc(  sizeof( unsigned long ) * count );
-        resultant = (unsigned long *) malloc(  sizeof( unsigned long ) * count );
-        num=0;
-        FILE *fptr;
+  		fclose(fptr);
+        //count=20;
+        //arr = (unsigned long *) malloc(  sizeof( unsigned long ) * count );
+        //resultant = (unsigned long *) malloc(  sizeof( unsigned long ) * count );
+        //num=0;
+        //FILE *fptr;
         /*fptr = fopen("integers", "r");
         printf("\nREading the File:\n");
         while ( (num = getw(fptr)) != EOF ) 
@@ -103,41 +104,41 @@ int main(int argc,char* argv[])
             index++;
 
         }
-        fclose(fptr);*/
+        fclose(fptr);
         for (unsigned long i = 0; i < count; ++i)
         {
             arr[i]=i+1;
-        }
-        printf("\nValues genertated :");
-        for (unsigned long i = 0; i < count; ++i)
+        }*/
+        /*printf("\nValues genertated :");
+        for (int i = 0; i < count; ++i)
         {
-            printf("%lu--",arr[i]);
-        }
+            printf("%d--",arr[i]);
+        }*/
 
 
         
     }
 
-    MPI_Bcast(&count,1,MPI_UNSIGNED_LONG,0,MPI_COMM_WORLD);    
+    MPI_Bcast(&count,1,MPI_INT,0,MPI_COMM_WORLD);    
 
-    MPI_Scatter(&arr[0],count/(unsigned long)size,MPI_UNSIGNED_LONG,&arr2,count/(unsigned long)size,MPI_UNSIGNED_LONG,0,MPI_COMM_WORLD);
+    MPI_Scatter(&arr[0],count/size,MPI_INT,&arr2,count/size,MPI_INT,0,MPI_COMM_WORLD);
 
     printf("\nElements Recieved :");
 
     int a4[arm]={0};
-    for(unsigned long i=0;i<count/size;i++)
+    for(int i=0;i<count/size;i++)
     {
         a4[ bitcount(arr2[i]) ] += 1 ;
     	//a4[i]=a2[i];
-        printf("[ %lu-%lu-%d ]",i,arr2[i],bitcount(arr2[i]));
+        //printf("[ %d-%d-%d ]",i,arr2[i],bitcount(arr2[i]));
     }
     printf("\n");
     printf("\nIndividual Bitband:");
-    for(int i=0;i<arm;i++)
+    /*for(int i=0;i<arm;i++)
     {
        	//a4[ bitcount(a2[i]) ] += 1  ;
        	printf(" [%d] ",a4[i]);
-    }
+    }*/
 
 
      MPI_Barrier(MPI_COMM_WORLD);
@@ -149,18 +150,18 @@ int main(int argc,char* argv[])
         clock_t start,stop;
         start=clock();
         printf("\n");
-        printf("\n Collected :%d",arm*size);
+        /*printf("\n Collected :%d",arm*size);
         for (int i = 0; i < arm; ++i)
         {
         	
             printf("\n%d--%d",i,bitband[i]);
 
-        }
+        }*/
         for(int i=1;i<=arm;i++)
         {
             bitband[i] += bitband[i-1];
         }
-         for(unsigned long i=0;i<count;i++)
+         for(int i=0;i<count;i++)
         {
             pos=bitcount(arr[i]);
             resultant[ ((pos==0)?0:bitband[pos-1]) + bitmap[pos] ] = arr[i];
@@ -172,9 +173,9 @@ int main(int argc,char* argv[])
             quicksort(resultant,bitband[i-1],bitband[i]-1);
         }
         stop=clock();
-        for(unsigned long i=0;i<count;i++)
+        for(int i=0;i<count;i++)
         {
-          printf("%lu  ",resultant[i]);
+          printf("%d  ",resultant[i]);
         }
         printf("CLOCKS PER SECOND = %ld\n",CLOCKS_PER_SEC);
         printf("START CLOCK = %ld \nSTOP CLOCK = %ld \n",start,stop);
@@ -202,9 +203,9 @@ MPI_Finalize();
 	
 	return 1;
 }
-int bitcount(unsigned long num)
+int bitcount(int num)
 {
-    unsigned long count1=0,count2=0, tmp,value=4278190080U,result;
+    int count1=0,count2=0, tmp,value=4278190080U,result;
     // checking the byte no. of register
     if(num==0)
         return 0;

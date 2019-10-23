@@ -29,7 +29,7 @@ int main()
 int *res;
       int num,i;   
     int count=0;
-    int arr[10001];
+    int arr[60000];
  clock_t start,stop;
     fptr = fopen("integers", "r");
         printf("\nReading the File:\n");
