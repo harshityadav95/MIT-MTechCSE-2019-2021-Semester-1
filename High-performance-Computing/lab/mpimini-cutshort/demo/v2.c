@@ -150,13 +150,13 @@ int main(int argc,char* argv[])
         clock_t start,stop;
         start=clock();
         printf("\n");
-        /*printf("\n Collected :%d",arm*size);
+        //printf("\n Collected :%d",arm*size);
         for (int i = 0; i < arm; ++i)
         {
         	
-            printf("\n%d--%d",i,bitband[i]);
+            printf("\n%d",bitband[i]);
 
-        }*/
+        }
         for(int i=1;i<=arm;i++)
         {
             bitband[i] += bitband[i-1];
