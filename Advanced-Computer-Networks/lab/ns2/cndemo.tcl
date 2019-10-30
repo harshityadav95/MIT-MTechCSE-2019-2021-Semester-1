@@ -473,10 +473,6 @@ $ns_ at 7.85 "$n12 color blue"
 
       #ANNOTATIONS DETAILS 
 
-      $ns_ at 0.0 "$ns_ trace-annotate \"MOBILE NODE MOVEMENTS\""
-      $ns_ at 4.1 "$ns_ trace-annotate \"NODE17 CACHE THE DATA FRO SERVER\""
-      #$ns_ at 4.59 "$ns_ trace-annotate \"PACKET LOSS AT NODE27\""     
-      $ns_ at 4.71 "$ns_ trace-annotate \"NODE10 CACHE THE DATA\""      
             
       ### PROCEDURE TO STOP 
 
